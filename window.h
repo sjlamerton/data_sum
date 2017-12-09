@@ -22,6 +22,8 @@ private:
 signals:
 
 public slots:
+    void onMinUpdate(int value);
+    void onMaxUpdate(int value);
 };
 
 #endif // WINDOW_H

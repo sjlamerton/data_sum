@@ -20,4 +20,19 @@ Window::Window(Data data, QWidget *parent) : input_data(data), QWidget(parent)
     formLayout->addRow("Sum:", result_text);
     setLayout(formLayout);
     setMinimumWidth(450);
+
+    connect(min_slider, &QSlider::valueChanged, this, &Window::onMinUpdate);
+    connect(max_slider, &QSlider::valueChanged, this, &Window::onMaxUpdate);
+}
+
+void Window::onMinUpdate(int value) {
+    if (max_slider->value() < value) {
+        max_slider->setValue(value);
+    }
+}
+
+void Window::onMaxUpdate(int value) {
+    if (min_slider->value() > value) {
+        min_slider->setValue(value);
+    }
 }
