@@ -14,7 +14,7 @@ class Window : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Window(data::Data data, QWidget *parent = nullptr);
+    explicit Window(data::Data data);
 
 private:
     void updateSum();
@@ -24,8 +24,6 @@ private:
     data::Data input_data;
     QFuture<double> async;
     QFutureWatcher<double> watcher;
-
-signals:
 
 public slots:
     void onMinUpdate(int value);

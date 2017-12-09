@@ -6,7 +6,7 @@
 
 #include "window.h"
 
-Window::Window(data::Data data, QWidget *parent) : input_data(data), QWidget(parent)
+Window::Window(data::Data data) : input_data(data)
 {
     min_slider = new QSlider(Qt::Horizontal);
     min_slider->setMaximum(static_cast<int>(data.size()));
