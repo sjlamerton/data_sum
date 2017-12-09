@@ -9,9 +9,10 @@
 Window::Window(data::Data data, QWidget *parent) : input_data(data), QWidget(parent)
 {
     min_slider = new QSlider(Qt::Horizontal);
-    min_slider->setMaximum(data.size());
+    min_slider->setMaximum(static_cast<int>(data.size()));
     max_slider = new QSlider(Qt::Horizontal);
-    max_slider->setMaximum(data.size());
+    max_slider->setMaximum(static_cast<int>(data.size()));
+    max_slider->setValue(max_slider->maximum());
     result_text = new QLineEdit();
     result_text->setReadOnly(true);
     auto formLayout = new QFormLayout();
