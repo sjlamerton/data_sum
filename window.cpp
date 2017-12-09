@@ -8,11 +8,12 @@
 
 Window::Window(data::Data data) : input_data(data)
 {
+    int max = static_cast<int>(data.size());
     min_slider = new QSlider(Qt::Horizontal);
-    min_slider->setMaximum(static_cast<int>(data.size()));
+    min_slider->setMaximum(max);
     max_slider = new QSlider(Qt::Horizontal);
-    max_slider->setMaximum(static_cast<int>(data.size()));
-    max_slider->setValue(max_slider->maximum());
+    max_slider->setMaximum(max);
+    max_slider->setValue(max);
     range_label = new QLabel();
     result_text = new QLineEdit();
     result_text->setReadOnly(true);
