@@ -13,12 +13,14 @@ Window::Window(data::Data data) : input_data(data)
     max_slider = new QSlider(Qt::Horizontal);
     max_slider->setMaximum(static_cast<int>(data.size()));
     max_slider->setValue(max_slider->maximum());
+    range_label = new QLabel();
     result_text = new QLineEdit();
     result_text->setReadOnly(true);
     auto formLayout = new QFormLayout();
     formLayout->addRow("", new QLabel("Please select the index range to sum using the sliders below"));
     formLayout->addRow("Minimum index", min_slider);
     formLayout->addRow("Maximum index", max_slider);
+    formLayout->addRow("Selected range:", range_label);
     formLayout->addRow("Sum:", result_text);
     setLayout(formLayout);
     setMinimumWidth(450);
@@ -27,8 +29,9 @@ Window::Window(data::Data data) : input_data(data)
     connect(max_slider, &QSlider::valueChanged, this, &Window::onMaxUpdate);
     connect(&watcher, &QFutureWatcher<double>::finished, this, &Window::onSumCalculated);
 
-    // calculate the total sum to start
+    // Calculate the initial total sum and selected range
     updateSum();
+    setRangeLabel();
 }
 
 void Window::onMinUpdate(int value) {
@@ -36,6 +39,7 @@ void Window::onMinUpdate(int value) {
         max_slider->setValue(value);
     }
     updateSum();
+    setRangeLabel();
 }
 
 void Window::onMaxUpdate(int value) {
@@ -43,6 +47,12 @@ void Window::onMaxUpdate(int value) {
         min_slider->setValue(value);
     }
     updateSum();
+    setRangeLabel();
+}
+
+void Window::setRangeLabel() {
+    range_label->setText(QString::number(min_slider->value()) + " - " +
+                         QString::number(max_slider->value()));
 }
 
 void Window::updateSum() {

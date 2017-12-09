@@ -9,6 +9,7 @@
 
 class QSlider;
 class QLineEdit;
+class QLabel;
 
 class Window : public QWidget
 {
@@ -18,9 +19,11 @@ public:
 
 private:
     void updateSum();
+    void setRangeLabel();
 
     QSlider *min_slider, *max_slider;
     QLineEdit *result_text;
+    QLabel *range_label;
     data::Data input_data;
     QFuture<double> async;
     QFutureWatcher<double> watcher;
