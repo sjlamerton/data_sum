@@ -2,10 +2,11 @@
 #include <QSlider>
 #include <QLineEdit>
 #include <QLabel>
+#include <QtConcurrent>
 
 #include "window.h"
 
-Window::Window(Data data, QWidget *parent) : input_data(data), QWidget(parent)
+Window::Window(data::Data data, QWidget *parent) : input_data(data), QWidget(parent)
 {
     min_slider = new QSlider(Qt::Horizontal);
     min_slider->setMaximum(data.size());
@@ -23,16 +24,33 @@ Window::Window(Data data, QWidget *parent) : input_data(data), QWidget(parent)
 
     connect(min_slider, &QSlider::valueChanged, this, &Window::onMinUpdate);
     connect(max_slider, &QSlider::valueChanged, this, &Window::onMaxUpdate);
+    connect(&watcher, &QFutureWatcher<double>::finished, this, &Window::onSumCalculated);
+
+    // calculate the total sum to start
+    updateSum();
 }
 
 void Window::onMinUpdate(int value) {
     if (max_slider->value() < value) {
         max_slider->setValue(value);
     }
+    updateSum();
 }
 
 void Window::onMaxUpdate(int value) {
     if (min_slider->value() > value) {
         min_slider->setValue(value);
     }
+    updateSum();
+}
+
+void Window::updateSum() {
+    // The previous value may not have returned so cancel it first
+    watcher.cancel();
+    async = QtConcurrent::run(data::sum, input_data, min_slider->value(), max_slider->value());
+    watcher.setFuture(async);
+}
+
+void Window::onSumCalculated() {
+    result_text->setText(QString::number(watcher.result()));
 }
