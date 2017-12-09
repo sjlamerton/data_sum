@@ -1,6 +1,8 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include "data.h"
+
 #include <QWidget>
 
 class QSlider;
@@ -10,10 +12,12 @@ class Window : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Window(QWidget *parent = nullptr);
+    explicit Window(Data data, QWidget *parent = nullptr);
 
+private:
     QSlider *min_slider, *max_slider;
     QLineEdit *result_text;
+    Data input_data;
 
 signals:
 

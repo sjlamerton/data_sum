@@ -10,4 +10,8 @@ SOURCES += \
     window.cpp
 
 HEADERS += \
-    window.h
+    window.h \
+    data.h
+
+DISTFILES += \
+    data/numbers.csv
