@@ -24,6 +24,9 @@ Data load(FilePath input_path)
         data.push_back(val);
     }
 
+    // TODO: We should check that the entire file was read correctly and
+    // notify the user if not
+
     return data;
 }
 
