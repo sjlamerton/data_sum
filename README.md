@@ -15,4 +15,5 @@ on the command line to generate build files as per standard Qt applications.
 ## Running
 
 When running the application expects the data file to be located at the path
-`data/numbers.csv` relative to the working directory.
+`data/numbers.csv` relative to the working directory, or it can be passed as a
+command line argument, i.e. data_sum path/to/datafile
