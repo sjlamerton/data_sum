@@ -7,7 +7,7 @@
 
 namespace data {
 
-Data load(std::experimental::filesystem::path input_path)
+Data load(FilePath input_path)
 {
     Data data;
 
