@@ -31,6 +31,7 @@ private:
 public slots:
     void onMinUpdate(int value);
     void onMaxUpdate(int value);
+    void onSliderReleased();
     void onSumCalculated();
 };
 

@@ -28,6 +28,8 @@ Window::Window(data::Data data) : input_data(data)
 
     connect(min_slider, &QSlider::valueChanged, this, &Window::onMinUpdate);
     connect(max_slider, &QSlider::valueChanged, this, &Window::onMaxUpdate);
+    connect(min_slider, &QSlider::sliderReleased, this, &Window::onSliderReleased);
+    connect(max_slider, &QSlider::sliderReleased, this, &Window::onSliderReleased);
     connect(&watcher, &QFutureWatcher<double>::finished, this, &Window::onSumCalculated);
 
     // Calculate the initial total sum and selected range
@@ -39,7 +41,6 @@ void Window::onMinUpdate(int value) {
     if (max_slider->value() < value) {
         max_slider->setValue(value);
     }
-    updateSum();
     setRangeLabel();
 }
 
@@ -47,8 +48,11 @@ void Window::onMaxUpdate(int value) {
     if (min_slider->value() > value) {
         min_slider->setValue(value);
     }
-    updateSum();
     setRangeLabel();
+}
+
+void Window::onSliderReleased() {
+    updateSum();
 }
 
 void Window::setRangeLabel() {
