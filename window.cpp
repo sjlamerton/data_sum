@@ -71,5 +71,5 @@ void Window::updateSum() {
 }
 
 void Window::onSumCalculated() {
-    result_text->setText(QString::number(watcher.result()));
+    result_text->setText(QString::number(watcher.result(), 'f', 5));
 }
