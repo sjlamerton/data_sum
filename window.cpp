@@ -10,8 +10,10 @@ Window::Window(data::Data data) : input_data(data)
 {
     int max = static_cast<int>(data.size());
     min_slider = new QSlider(Qt::Horizontal);
+    min_slider->setMinimum(1);
     min_slider->setMaximum(max);
     max_slider = new QSlider(Qt::Horizontal);
+    max_slider->setMinimum(1);
     max_slider->setMaximum(max);
     max_slider->setValue(max);
     range_label = new QLabel();
@@ -63,7 +65,8 @@ void Window::setRangeLabel() {
 void Window::updateSum() {
     // The previous value may not have returned so cancel it first
     watcher.cancel();
-    async = QtConcurrent::run(data::sum, input_data, min_slider->value(), max_slider->value());
+    // Offset the min for our zero-indexed data
+    async = QtConcurrent::run(data::sum, input_data, min_slider->value() - 1, max_slider->value());
     watcher.setFuture(async);
 }
 
